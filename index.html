@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking</title>
+    <link rel="stylesheet" href="./main.css">
+    <!-- Libraries for AR -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+</head>
+<body>
+    <!-- 3D Scene -->
+    <a-scene mindar-face="autoStart: false" embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        <!-- 3D assets must be listed here as "a-asset-item"s. I mean, as children of "a-assets" -->
+        <a-assets>
+            <a-asset-item id="glasses" src="./glasses/scene.gltf"></a-asset-item>
+        </a-assets>
+        <!-- For each "a-asset-item" add a corresponding "a-entity" below. Use the one below for reference -->
+        <!-- "anchorIndex" is where the element should be placed in the face. Visit the link below to get all the possible anchor indexes -->
+        <!-- https://github.com/tensorflow/tfjs-models/blob/master/face-landmarks-detection/mesh_map.jpg -->
+        <a-entity mindar-face-target="anchorIndex: 168">
+            <!-- This "a-gltf-model" element is used to update the rotation, position and scale of the 3D element. -->
+            <!-- Notice that there's a "src" attribute that must match the "id" of the "a-asset-item" element -->
+            <a-gltf-model rotation="0 0 0" position="0 0 -0.05" scale="0.135 0.135 0.135" src="#glasses"></a-gltf-model>
+        </a-entity>
+        <a-camera active="false" position="0 0 0"></a-camera>
+    </a-scene>
+
+    <!-- Indication -->
+    <div class="indication show" id="indication">
+        <img src="./assets/face-detection.svg" class="indication__img">
+        <p class="indication__text">Get your face closer to this point</p>
+    </div>
+
+    <!-- Border -->
+    <div class="border" id="border">
+        <img src="./assets/border.png" alt="">
+    </div>
+
+    <!-- Counter -->
+    <div class="counter">
+        <p class="counter__text" id="counter-text">5</p>
+    </div>
+
+    <!-- Finish -->
+    <div class="finish" id="finish">
+        <img src="" alt="" class="finish__bk" id="finish-bk">
+        <div class="finish__overlay"></div>
+        <div class="finish__top">
+            <h1 class="finish__title">Want to save the happiness?</h1>
+            <p class="finish__desc">Scan the QR below to download the photo:</p>
+        </div>
+        <div class="finish__center">
+            <div class="finish__qr-container">
+                <img src="./assets/spinner.svg" alt="" class="finish__qr" id="image-qr">
+            </div>
+            <button class="finish__back" id="back">Back</button>
+        </div>
+        <div class="finish__bottom">
+            <img src="./assets/logo.svg" alt="" class="finish__logo">
+        </div>
+    </div>
+
+    <script src="./main.js" type="module"></script>
+</body>
+</html>
